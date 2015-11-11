@@ -103,10 +103,17 @@ public class SOV {
 
 	// 平均速度：全ての車の速度の平均値
 	public double velocity() {
+		/*
+		 * 有効速度(effective velocity)：
+		 * 直前に車がいる場合はv_iの代わりに0を用いる。
+		 */
 		double vel = 0;
-		for (int i = 0; i < v.size(); i++) {
-			vel += v.get(i);
+		for (int i = 0; i < v.size() - 1; i++) {
+			if (x.get(i) + 1 != v.get(i + 1))
+				vel += v.get(i);
 		}
+		if (v.size() > 0)
+			vel += v.get(v.size() - 1);
 		return (v.size() == 0) ? 0 : (vel / v.size());
 	}
 
